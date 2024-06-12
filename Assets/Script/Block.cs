@@ -15,12 +15,16 @@ public class Block : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.Instance.IsGameStartValue() == true)
+        {
+            Destroy(gameObject);
+        }
         if (Player.transform.position.x - transform.position.x > 80f)
         {
-            GameManager.Instance.Score++;
-            if (GameManager.Instance.Score % 50 == 0)
+            GameManager.Instance.ScoreUp(1);
+            if (GameManager.Instance.Score % 25 == 0)
             {
-                GameManager.Instance.Level++;
+                GameManager.Instance.LevelUp(1);
             }
             Destroy(gameObject);
         }

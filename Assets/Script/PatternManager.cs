@@ -14,21 +14,16 @@ public class PatternManager : MonoBehaviour
     
     public GameObject Player;
     private Vector3 beforePlayerPosition;
-
-   
     
     public List<Pattern> MapPattern;
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        if (Player.transform.position.x > beforePlayerPosition.x + 44.5f)
+        if (GameManager.Instance.IsGameStartValue() == true)
+        {
+            beforePlayerPosition = Vector3.zero;
+        }
+        if (Player.transform.position.x > beforePlayerPosition.x + 50f)
         {
             //맵 생성
             int mapLevel = GameManager.Instance.Level;
