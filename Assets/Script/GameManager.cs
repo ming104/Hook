@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
@@ -53,6 +52,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         InitializeGame();
+        Debug.Log(DataManager.Instance.SkinDataLoad().ballSkin.Count);
     }
 
     void Update()
@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
 
     private void CheckPlayerDeath()
     {
-        if (player.transform.position.y < -40 && _isGameEndCoroutine == false)
+        if (player.transform.position.y < -40 && _isGameEndCoroutine == false || player.transform.position.y > 20 && _isGameEndCoroutine == false)
         {
             StartCoroutine(PlayerDead());
         }
@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviour
 
     public void SaveData()
     {
-        //DataManager.Instance.GameDataSave(currentStar, Score);
+        DataManager.Instance.GameDataSave(currentStar, Score);
     }
 
     public IEnumerator PlayerDead()
@@ -141,6 +141,9 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         player.SetActive(true);
         PlayerDeathEvent.Invoke();
+        UIManager.Instance.ScoreSet();
+        Score = 0;
+        Level = 0;
         player.transform.position = shotPosition.position;
         playerHook.isHookActive = false;
         playerHook.isLineMax = false;

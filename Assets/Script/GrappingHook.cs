@@ -35,8 +35,7 @@ public class GrappingHook : MonoBehaviour
             line.SetPosition(0, transform.position);
             line.SetPosition(1, hook.position);
 
-            if (Input.GetMouseButtonDown(0) && !isHookActive ||
-                Input.GetKeyDown(KeyCode.Space) && !isHookActive) // 갈고리 발사
+            if (Input.GetMouseButtonDown(0) && !isHookActive) // 갈고리 발사
             {
                 hook.position = transform.position; // 갈고리 좌표를 현재 좌표로 지정
                 mousedir = new Vector2(45f, 45f); //Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position; // 마우스 클릭 위치 즉 누른 위치를 받아옴

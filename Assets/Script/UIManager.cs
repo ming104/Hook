@@ -41,6 +41,7 @@ public class UIManager : MonoBehaviour
     {
         StartMainUIActive(true);
         scoreText.gameObject.SetActive(false);
+        ScoreSet();
     }
 
     // Update is called once per frame
@@ -60,6 +61,12 @@ public class UIManager : MonoBehaviour
     public void StartMainUIActive(bool isActive)
     {
         startMainUI.SetActive(isActive);
+    }
+
+    public void ScoreSet()
+    {
+        mainScore.text = $"{DataManager.Instance.GameDataLoad().currentScore}";
+        mainBestScore.text = $"{DataManager.Instance.GameDataLoad().bestScore}";
     }
 
 

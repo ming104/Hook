@@ -12,6 +12,29 @@ public class GameData
     public int currentScore;
     public int bestScore;
 }
+[Serializable]
+public class BallSkinData
+{
+    public string ballSkinName;
+}
+[Serializable]
+public class LineSkinData
+{
+    public string lineSkinName;
+}
+[Serializable]
+public class HookSkinData
+{
+    public string hookSkinName ;
+}
+
+[Serializable]
+public class SkinData
+{
+    public List<BallSkinData> ballSkin;
+    public List<LineSkinData> lineSkin;
+    public List<HookSkinData> hookSkin;
+}
 
 public class DataManager : MonoBehaviour
 {
@@ -45,18 +68,19 @@ public class DataManager : MonoBehaviour
     }
     #endregion
 
-    public void GameDataSave(int currentStarCount, int currentScore, int bestScore)
+    #region GameData
+    public void GameDataSave(int currentStarCount, int currentScore)
     {
         string filePath = Application.persistentDataPath + "/GameData.json";
         GameData gameData = null; // 기본값으로 null 할당
 
-        // 파일 존재 여부 확인 및 읽기
+        // 파일 존재 여부 확인
         if (File.Exists(filePath))
         {
             try
             {
-                string jsonData = File.ReadAllText(filePath); // 파일에서 JSON 문자열을 읽음
-                gameData = JsonUtility.FromJson<GameData>(jsonData); // JSON 문자열을 GameData 객체로 변환
+                string jsonData = File.ReadAllText(filePath); // 파일에서 json 문자열을 읽음
+                gameData = JsonUtility.FromJson<GameData>(jsonData); // json 문자열을 GameData으로 변환
             }
             catch (Exception e)
             {
@@ -64,10 +88,10 @@ public class DataManager : MonoBehaviour
             }
         }
 
-        // 파일이 없거나 읽기 실패 시 기본 GameData 객체 생성
+        // 파일이 없거나 읽기 실패 시 기본 GameData생성
         if (gameData == null)
         {
-            Debug.LogWarning("Save file not found or error reading file. Creating a new GameData instance.");
+            Debug.LogWarning("파일이 없거나 읽을 수 없음 gamedata 생성함");
             gameData = new GameData();
             gameData.star = 0; // 기본값 지정
             gameData.currentScore = 0;
@@ -79,15 +103,18 @@ public class DataManager : MonoBehaviour
         {
             gameData.star = currentStarCount; // 현재 star 값을 업데이트
             gameData.currentScore = currentScore;
-            //gameData.bestScore = 
+            if (currentScore > GameDataLoad().bestScore)
+            {
+                gameData.bestScore = currentScore;
+            }
         }
         else
         {
-            Debug.LogError("GameManager instance is null!");
+            Debug.LogError("게임매니저가 없음!");
             return;
         }
 
-        // 업데이트된 GameData 객체를 JSON 문자열로 변환
+        // 업데이트된 GameData를 json으로 변환
         string changeGameData = JsonUtility.ToJson(gameData, true);
 
         // JSON 문자열을 파일에 씀
@@ -109,8 +136,8 @@ public class DataManager : MonoBehaviour
         {
             try
             {
-                string jsonData = File.ReadAllText(filePath); // 파일에서 JSON 문자열을 읽음
-                GameData gameData = JsonUtility.FromJson<GameData>(jsonData); // JSON 문자열을 GameData 객체로 변환
+                string jsonData = File.ReadAllText(filePath); // 파일에서 json 문자열을 읽음
+                GameData gameData = JsonUtility.FromJson<GameData>(jsonData); // json 문자열을 GameData 으로 변환
                 return gameData;
             }
             catch (Exception e)
@@ -123,7 +150,7 @@ public class DataManager : MonoBehaviour
         {
             Debug.LogWarning("파일을 찾을 수 없음. 새로 생성함");
         
-            GameData gameData = new GameData(); // 새로운 GameData 객체 생성
+            GameData gameData = new GameData(); // 새로운 GameData 생성
             gameData.star = 0; // 기본값 지정
             gameData.currentScore = 0;
             gameData.bestScore = 0;
@@ -146,4 +173,62 @@ public class DataManager : MonoBehaviour
             Debug.LogError("Error writing game data file: " + e.Message);
         }
     }
+    #endregion GameData
+
+    #region SkinData
+
+    public void SkinDataSave()
+    {
+        string filePath = Application.persistentDataPath + "/SkinData.json";
+        SkinData skinData = null;
+        
+        if (File.Exists(filePath))
+        {
+            string jsonData = File.ReadAllText(filePath); // 파일에서 json 문자열을 읽음
+            skinData = JsonUtility.FromJson<SkinData>(jsonData); // json 문자열을 GameData으로 변환
+        }
+        else
+        {
+            skinData = new SkinData();
+            skinData.hookSkin = new List<HookSkinData>();
+            skinData.lineSkin = new List<LineSkinData>();
+            skinData.ballSkin = new List<BallSkinData>();
+        }
+        string changeSkinData = JsonUtility.ToJson(skinData, true);
+        File.WriteAllText(filePath, changeSkinData);
+    }
+
+    public SkinData SkinDataLoad()
+    {
+        string filePath = Application.persistentDataPath + "/SkinData.json";
+        if (File.Exists(filePath))
+        {
+            try
+            {
+                string jsonData = File.ReadAllText(filePath);
+                SkinData gameData = JsonUtility.FromJson<SkinData>(jsonData);
+                return gameData;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("Error reading game data file: " + e.Message);
+                return new SkinData();
+            }
+        }
+        else
+        {
+            Debug.LogWarning("파일을 찾을 수 없음. 새로 생성함");
+        
+            SkinData skinData = new SkinData();
+            skinData = new SkinData();
+            skinData.hookSkin = new List<HookSkinData>();
+            skinData.lineSkin = new List<LineSkinData>();
+            skinData.ballSkin = new List<BallSkinData>();
+            string jsonData = JsonUtility.ToJson(skinData, true); // GameData 객체를 JSON 문자열로 변환
+            File.WriteAllText(filePath, jsonData); // JSON 문자열을 파일에 씀
+            return skinData;
+        }
+    }
+
+    #endregion
 }
