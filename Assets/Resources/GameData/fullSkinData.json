@@ -1,0 +1,22 @@
+{
+    "ball": {
+        "common": ["White","Red", "Orange", "Yellow","Green","Blue","Purple"],
+        "rare": [],
+        "epic": []
+    },
+    "line": {
+        "common": ["White","Red", "Orange", "Yellow","Green","Blue","Purple"],
+        "rare": [],
+        "epic": []
+    },
+    "hook": {
+        "common": ["White","Red", "Orange", "Yellow","Green","Blue","Purple"],
+        "rare": [],
+        "epic": []
+    },
+    "trail": {
+        "common": ["White","Red", "Orange", "Yellow","Green","Blue","Purple"],
+        "rare": [],
+        "epic": []
+    }
+}

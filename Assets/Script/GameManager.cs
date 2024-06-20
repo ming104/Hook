@@ -52,7 +52,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         InitializeGame();
-        Debug.Log(DataManager.Instance.SkinDataLoad().ballSkin.Count);
+        
+        //DataManager.Instance.SkinDataSave(0,0,"White");
     }
 
     void Update()
