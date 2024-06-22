@@ -29,9 +29,15 @@ public class GameManager : MonoBehaviour
     }
     #endregion
     
+    //player
     public GameObject player;
     public Rigidbody2D playerRigid;
     public GrappingHook playerHook;
+    //=====
+    //hook
+    public GameObject hook;
+    public GameObject line;
+    //=====
     public Transform shotPosition;
     public float shotingPower;
     public int currentStar;
@@ -74,6 +80,7 @@ public class GameManager : MonoBehaviour
         isShoot = false;
         Level = 0;
         Score = 0;
+        cameraMove.target = player.transform;
         // cameraMove = GameObject.Find("Main").GetComponent<CameraMove>();
     }
 
@@ -91,7 +98,6 @@ public class GameManager : MonoBehaviour
         player.SetActive(true);
         player.transform.position = shotPosition.position;
         playerRigid.AddForce(shotPosition.right * shotingPower, ForceMode2D.Impulse);
-        cameraMove.target = player.transform;
         isGameStart = false;
         isShoot = true;
     }
@@ -101,6 +107,7 @@ public class GameManager : MonoBehaviour
         if (player.transform.position.y < -40 && _isGameEndCoroutine == false || player.transform.position.y > 20 && _isGameEndCoroutine == false)
         {
             StartCoroutine(PlayerDead());
+            UIManager.Instance.tapToGo.gameObject.SetActive(false);
         }
     }
 

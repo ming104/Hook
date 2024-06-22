@@ -17,7 +17,7 @@ public class PatternManager : MonoBehaviour
     
     public List<Pattern> MapPattern;
     
-    void Update()   
+    void Update()
     {
         if (GameManager.Instance.IsGameStartValue() == true)
         {

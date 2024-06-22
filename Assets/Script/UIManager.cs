@@ -37,15 +37,18 @@ public class UIManager : MonoBehaviour
     public GameObject startMainUI;
 
     public GameObject SkinUI;
+
+    public TextMeshPro tapToGo;
     
     //SkinSetting------------
     public TextMeshProUGUI selectText; // ball, Line, Hook 변경되는 텍스트
     public TextMeshProUGUI rarityText; // 희귀도 텍스트
     public TextMeshProUGUI newSkinText;
     public GameObject sampleBall; // 현재 장착하고 있는 ball 프리뷰
-    public GameObject[] SkinSelectMenu;
+    public GameObject[] skinSelectMenu;
     public int skinIndex;
-    
+
+    public SkinManager SkinInstance;
     // Start is called before the first frame update
     void Start()
     {
@@ -54,6 +57,8 @@ public class UIManager : MonoBehaviour
         ScoreTextActive(false);
         SelectedBall();
         ScoreSet();
+        
+        SkinInstance = SkinManager.Instance;
     }
 
     // Update is called once per frame
@@ -66,6 +71,7 @@ public class UIManager : MonoBehaviour
     public void GameStartButton()
     {
         GameManager.Instance.IsGameStartChangeValue(true);
+        tapToGo.gameObject.SetActive(true);
         ScoreTextActive(true);
         StartMainUIActive(false);
     }
@@ -109,44 +115,45 @@ public class UIManager : MonoBehaviour
     // SkinSetting
     public void SelectedBall()
     {
+        skinIndex = 0;
         selectText.text = "Ball";
         newSkinText.text = "Buy new Ball Skin";
         SkinSelectedUI(0);
-        skinIndex = 0;
-        SkinManager.Instance.UnlockSkin();
+        SkinInstance.SkinSelected(0);
     }
     public void SelectedLine()
     {
+        skinIndex = 1;
         selectText.text = "Rope";
         newSkinText.text = "Buy new Rope Skin";
         SkinSelectedUI(1);
-        skinIndex = 1;
-        SkinManager.Instance.UnlockSkin();
+        SkinInstance.SkinSelected(1);
     }
     public void SelectedHook()
     {
+        skinIndex = 2;
         selectText.text = "Hook";
         newSkinText.text = "Buy new Hook Skin";
         SkinSelectedUI(2);
-        skinIndex = 2;
-        SkinManager.Instance.UnlockSkin();
+        SkinInstance.SkinSelected(2);
     }
     public void SelectedTrail()
     {
+        skinIndex = 3;
         selectText.text = "Trail";
         newSkinText.text = "Buy new Trail Skin";
         SkinSelectedUI(3);
-        skinIndex = 3;
-        SkinManager.Instance.UnlockSkin();
+        SkinInstance.SkinSelected(3);
     }
 
     public void SkinSelectedUI(int count)
     {
-        for (int i = 0; i < SkinSelectMenu.Length; i++)
+        for (int i = 0; i < skinSelectMenu.Length; i++)
         {
-            SkinSelectMenu[i].SetActive(false);
+            skinSelectMenu[i].SetActive(false);
         }
-        SkinSelectMenu[count].SetActive(true);
+       skinSelectMenu[count].SetActive(true);
+       SkinInstance.UnlockSkin();
     }
     //==========
 }

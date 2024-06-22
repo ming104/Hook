@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -33,17 +34,33 @@ public class SkinManager : MonoBehaviour
     #endregion
 
     public List<GameObject> skinContent;
+
+    public SkinSet[] skinSetting;
     
     // Start is called before the first frame update
     void Start()
     {
+        skinSetting = skinContent[UIManager.Instance.skinIndex].GetComponentsInChildren<SkinSet>();
         
+        foreach (SkinSet skinset in skinSetting)
+        {
+            skinset.SkinUpdate();
+        }
     }
 
     // Update is called once per frame
-    void Update()
+    // void Update()
+    // {
+    //     UnlockSkin();
+    // }
+
+    public void SkinSelected(int type)
     {
-        
+        skinSetting = skinContent[UIManager.Instance.skinIndex].GetComponentsInChildren<SkinSet>();
+        foreach (SkinSet skinset in skinSetting)
+        {
+            skinset.UISkinUpdate(type);
+        }
     }
 
     public void UnlockSkin()
@@ -77,7 +94,6 @@ public class SkinManager : MonoBehaviour
                 int rand = Random.Range(0, GetingSkin.Count);
                 DataManager.Instance.SkinDataSave(UIManager.Instance.skinIndex, 1, GetingSkin[rand]);
                 UnlockSkin();
-                UnlockSkin();
             }
             else if (randomNumber is > 90 and <= 100)
             {
@@ -85,7 +101,6 @@ public class SkinManager : MonoBehaviour
                 List<string> GetingSkin = DataManager.Instance.FullSkinDataLoad(UIManager.Instance.skinIndex, 2);
                 int rand = Random.Range(0, GetingSkin.Count);
                 DataManager.Instance.SkinDataSave(UIManager.Instance.skinIndex, 2, GetingSkin[rand]);
-                UnlockSkin();
                 UnlockSkin();
             }
             DataManager.Instance.GameDataSave(GameManager.Instance.currentStar, DataManager.Instance.GameDataLoad().currentScore);

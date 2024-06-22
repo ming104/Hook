@@ -32,9 +32,9 @@ public class SkinData
     public SkinList trail = new SkinList();
     
     public string ballSkin = "White";
-    public string lineSkin= "White";
-    public string hookSkin= "White";
-    public string trailSkin= "White";
+    public string lineSkin = "White";
+    public string hookSkin = "White";
+    public string trailSkin = "White";
 }
 
 [Serializable]
@@ -151,7 +151,6 @@ public class DataManager : MonoBehaviour
             Debug.LogError("Error writing game data file: " + e.Message);
         }
     }
-
     
     public GameData GameDataLoad()
     {
@@ -221,6 +220,28 @@ public class DataManager : MonoBehaviour
             Debug.LogWarning("Skin already exists: " + skinName);
             GameManager.Instance.currentStar += 50;
         }
+    }
+
+    public void SkinDataSave(int type, string SkinName)
+    {
+        SkinData skinData = LoadSkinData(); // 기존 데이터를 받아와서 skinData에 넣음
+
+        switch (type)
+        {
+            case 0: //ball
+                skinData.ballSkin = SkinName;
+                break;
+            case 1: //line
+                skinData.lineSkin = SkinName;
+                break;
+            case 2: //Hook
+                skinData.hookSkin = SkinName;
+                break;
+            case 3: //trail
+                skinData.trailSkin = SkinName;
+                break;
+        }
+        SaveSkinData(skinData);
     }
 
     private SkinData LoadSkinData() // 기존의 데이터를 받아오는 코드
@@ -298,17 +319,23 @@ public class DataManager : MonoBehaviour
     public SkinData SkinDataLoad()
     {
         string filePath = Application.persistentDataPath + "/SkinData.json";
-        
+    
         if (File.Exists(filePath))
         {
-            string jsonData = File.ReadAllText(filePath);
-            SkinData skinData = JsonUtility.FromJson<SkinData>(jsonData);
-            return skinData;
+            try
+            {
+                string jsonData = File.ReadAllText(filePath);
+                SkinData skinData = JsonUtility.FromJson<SkinData>(jsonData);
+                return skinData;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("Error reading skin data file: " + e.Message);
+            }
         }
-        else
-        {
-            return null;
-        }
+
+        // 파일이 없거나 읽기 실패 시 기본 SkinData 생성하여 반환
+        return new SkinData();
     }
     
     public List<string> FullSkinDataLoad(int type, int rarity)
