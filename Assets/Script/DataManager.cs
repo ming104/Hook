@@ -45,6 +45,20 @@ public class FullSkinData
     public SkinList hook = new SkinList();
     public SkinList trail = new SkinList();
 }
+
+[Serializable]
+public class Achievement
+{
+    public string name;
+    public string description;
+    public bool isUnlocked;
+}
+
+[Serializable]
+public class AchievementList
+{
+    public List<Achievement> achievements;
+}
 //------------------------------------
 
 public class DataManager : MonoBehaviour
@@ -381,6 +395,55 @@ public class DataManager : MonoBehaviour
         FullSkinData fullSkinData = new FullSkinData();
         string changeGameData = JsonUtility.ToJson(fullSkinData, true);
         File.WriteAllText(filePath, changeGameData);
+    }
+
+    #endregion
+
+    #region Achievement
+    //private List<Achievement> achievements;
+    public AchievementList LoadAchievements()
+    {
+        AchievementList achievements = new AchievementList();
+        string filePath = Application.persistentDataPath + "/achievements.json";
+        if (File.Exists(filePath))
+        {
+            string json = File.ReadAllText(filePath);
+            achievements = JsonUtility.FromJson<AchievementList>(json);
+            //return achievements;
+        }
+        else
+        {
+            TextAsset asset = Resources.Load<TextAsset>("GameData/achievements");
+            if (asset != null)
+            {
+                string jsonAssetText = asset.text;
+                achievements = JsonUtility.FromJson<AchievementList>(jsonAssetText);
+                
+                string json = JsonUtility.ToJson(achievements, true);
+                File.WriteAllText(filePath, json);
+                //SaveAchievements();
+            }
+            else
+            {
+                Debug.LogError("Achievements file not found in Resources");
+            }
+        }
+        return achievements;
+    }
+
+    private void SaveAchievements()
+    {
+        string filePath = Application.persistentDataPath + "/achievements.json";
+        
+    }
+
+    public void ChangeLocked(int id, bool value)
+    {
+        string filePath = Application.persistentDataPath + "/achievements.json";
+        AchievementList achievementList = LoadAchievements();
+        achievementList.achievements[id].isUnlocked = value;
+        string json = JsonUtility.ToJson(achievementList, true);
+        File.WriteAllText(filePath, json);
     }
 
     #endregion

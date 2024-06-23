@@ -39,6 +39,8 @@ public class UIManager : MonoBehaviour
     public GameObject SkinUI;
 
     public TextMeshPro tapToGo;
+
+    public GameObject AchievementUI;
     
     //SkinSetting------------
     public TextMeshProUGUI selectText; // ball, Line, Hook 변경되는 텍스트
@@ -54,6 +56,7 @@ public class UIManager : MonoBehaviour
     {
         StartMainUIActive(true);
         SkinUIActive(false);
+        AchievementUIActive(false);
         ScoreTextActive(false);
         SelectedBall();
         ScoreSet();
@@ -79,6 +82,11 @@ public class UIManager : MonoBehaviour
     public void StartMainUIActive(bool isActive)
     {
         startMainUI.SetActive(isActive);
+    }
+
+    public void AchievementUIActive(bool isActive)
+    {
+        AchievementUI.SetActive(isActive);
     }
 
     public void ScoreSet()
