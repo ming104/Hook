@@ -100,6 +100,7 @@ public class GameManager : MonoBehaviour
         playerRigid.AddForce(shotPosition.right * shotingPower, ForceMode2D.Impulse);
         isGameStart = false;
         isShoot = true;
+        GameStartAchievement();
     }
 
     private void CheckPlayerDeath()
@@ -107,6 +108,7 @@ public class GameManager : MonoBehaviour
         if (player.transform.position.y < -40 && _isGameEndCoroutine == false || player.transform.position.y > 20 && _isGameEndCoroutine == false)
         {
             StartCoroutine(PlayerDead());
+            ScoreAchievement(Score);
             UIManager.Instance.tapToGo.gameObject.SetActive(false);
         }
     }
@@ -161,4 +163,37 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.ScoreTextActive(false);
         _isGameEndCoroutine = false;
     }
+
+    #region Achievement
+    public void GameStartAchievement()
+    {
+        if (DataManager.Instance.LoadAchievements().achievements[0].isUnlocked == false)
+        {
+            Debug.Log("성공");
+            DataManager.Instance.ChangeLocked(0,true,false);
+        }
+    }
+    
+    public void PickAchievement()
+    {
+        if (DataManager.Instance.LoadAchievements().achievements[1].isUnlocked == false)
+        {
+            Debug.Log("성공");
+            DataManager.Instance.ChangeLocked(1,true,false);
+        }
+    }
+
+    public void ScoreAchievement(int score)
+    {
+        int[] scoreThresholds = { 25, 50, 75, 100, 200 };
+    
+        for (int i = 0; i < scoreThresholds.Length; i++)
+        {
+            if (score >= scoreThresholds[i] && !DataManager.Instance.LoadAchievements().achievements[i + 2].isUnlocked)
+            {
+                DataManager.Instance.ChangeLocked(i + 2, true, false);
+            }
+        }
+    }
+    #endregion
 }

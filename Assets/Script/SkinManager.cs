@@ -77,6 +77,7 @@ public class SkinManager : MonoBehaviour
     {
         if (GameManager.Instance.currentStar >= 500)
         {
+            GameManager.Instance.PickAchievement();
             GameManager.Instance.currentStar -= 500;
             int randomNumber = Random.Range(1, 70); // 시험 common만
             if (randomNumber is > 0 and <= 70)

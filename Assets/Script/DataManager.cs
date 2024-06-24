@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using UnityEditor.U2D.Animation;
 using UnityEngine;
 
 // 게임 데이터 -----------------------
@@ -52,6 +51,8 @@ public class Achievement
     public string name;
     public string description;
     public bool isUnlocked;
+    public int reward;
+    public bool isRewardCollected;
 }
 
 [Serializable]
@@ -437,11 +438,12 @@ public class DataManager : MonoBehaviour
         
     }
 
-    public void ChangeLocked(int id, bool value)
+    public void ChangeLocked(int id, bool lockedValue, bool rewardCollectedValue)
     {
         string filePath = Application.persistentDataPath + "/achievements.json";
         AchievementList achievementList = LoadAchievements();
-        achievementList.achievements[id].isUnlocked = value;
+        achievementList.achievements[id].isRewardCollected = rewardCollectedValue;
+        achievementList.achievements[id].isUnlocked = lockedValue;
         string json = JsonUtility.ToJson(achievementList, true);
         File.WriteAllText(filePath, json);
     }

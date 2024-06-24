@@ -1,39 +1,54 @@
 {
-"achievements": [
-    {
-        "name": "First Steps",
-        "description": "게임 플레이 1회",
-        "isUnlocked": false
-    },
-    {
-        "name": "25점 달성!",
-        "description": "25점을 처음으로 달성했습니다!",
-        "isUnlocked": false
-    },
-    {
-        "name": "50점 달성!",
-        "description": "50점을 처음으로 달성했습니다!",
-        "isUnlocked": false
-    },
-    {
-        "name": "75점 달성!",
-        "description": "75점을 처음으로 달성했습니다!",
-        "isUnlocked": false
-    },
-    {
-        "name": "100점 달성!",
-        "description": "100점을 처음으로 달성했습니다!\n정말 놀랍네요!",
-        "isUnlocked": false
-    },
-    {
-        "name": "200점 달성!",
-        "description": "200점을 처음으로 달성했습니다!\n당신을 hook! 장인으로 인정합니다!",
-        "isUnlocked": false
-    },
-    {
-        "name": "뽑기 1회!",
-        "description": "뽑기를 하셨군요! 다양한 스킨을 획득해 보세요!",
-        "isUnlocked": false
-    }
-]
+"achievements": 
+[
+        {
+            "name": "First Steps",
+            "description": "게임 플레이 1회",
+            "isUnlocked": false,
+            "reward": 200,
+            "isRewardCollected" : false
+        },
+        {
+            "name": "뽑기 1회!",
+            "description": "뽑기를 하셨군요!\n다양한 스킨을 획득해 보세요!",
+            "isUnlocked": false,
+            "reward": 200,
+            "isRewardCollected" : false
+        },
+        {
+            "name": "25점 달성!",
+            "description": "25점을 처음으로 달성했습니다!",
+            "isUnlocked": false,
+            "reward": 250,
+            "isRewardCollected" : false
+        },
+        {
+            "name": "50점 달성!",
+            "description": "50점을 처음으로 달성했습니다!",
+            "isUnlocked": false,
+            "reward": 500,
+            "isRewardCollected" : false
+        },
+        {
+            "name": "75점 달성!",
+            "description": "75점을 처음으로 달성했습니다!",
+            "isUnlocked": false,
+            "reward": 750,
+            "isRewardCollected" : false
+        },
+        {
+            "name": "100점 달성!",
+            "description": "100점을 처음으로 달성했습니다!\n정말 놀랍네요!",
+            "isUnlocked": false,
+            "reward": 1000,
+            "isRewardCollected" : false
+        },
+        {
+            "name": "200점 달성!",
+            "description": "200점을 처음으로 달성했습니다!\n당신을 hook! 장인으로 인정합니다!",
+            "isUnlocked": false,
+            "reward": 2000,
+            "isRewardCollected" : false
+        }
+    ]
 }
